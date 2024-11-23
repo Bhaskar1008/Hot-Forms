@@ -1,47 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "antd";
+import { Input, Form } from "antd";
 import "./APIComp.css";
 
-const APIComp = ({ values, componentType, setDisplayObj }) => {
-  const [PropValue, setPropValue] = useState("");
+const APIComp = ({ values, componentType, setDataObj }) => {
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    if (values?.display?.label) {
+      const generatedKey = toCamelCase(values.display.label);
+      setApiKey(generatedKey);
+      handleApiKeyChange(generatedKey);
+    }
+  }, [values?.display?.label]);
 
   const toCamelCase = (str) => {
     return str
-      .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
-        index === 0 ? match.toLowerCase() : match.toUpperCase()
-      )
-      .replace(/\s+/g, "");
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase())
+      .replace(/[^a-zA-Z0-9]/g, '');
   };
 
-  useEffect(() => {
-    const randomNum = Math.floor(Math.random() * 1000);
-    if (values?.display?.label) {
-      setPropValue(toCamelCase(values.display.label));
-    } else {
-      setPropValue(`${toCamelCase(componentType)}${randomNum}`);
-    }
-  }, [componentType, values?.display?.label]);
-
-  const handleChange = (e) => {
-    const val = e.target.value;
-    setPropValue(val);
-    if (typeof setDisplayObj === "function") {
-      setDisplayObj((prevValues) => ({
-        ...prevValues,
-        api: {
-          ...prevValues.api,
-          apiKey: val,
-        },
-      }));
-    }
+  const handleApiKeyChange = (value) => {
+    setApiKey(value);
+    setDataObj(prev => ({
+      ...prev,
+      api: {
+        ...prev.api,
+        apiKey: value
+      },
+      display: {
+        ...prev.display,
+        apiKey: value
+      }
+    }));
   };
 
   return (
     <div className="main-div">
-      <div>
-        <div className="property">Property Name</div>
-        <Input value={PropValue} onChange={handleChange} />
-      </div>
+      <Form layout="vertical">
+        <Form.Item 
+          label="Property Name"
+          required
+          tooltip="This will be used as the field identifier in form data"
+        >
+          <Input
+            value={apiKey}
+            onChange={(e) => handleApiKeyChange(e.target.value)}
+            placeholder="Enter property name"
+          />
+        </Form.Item>
+      </Form>
     </div>
   );
 };

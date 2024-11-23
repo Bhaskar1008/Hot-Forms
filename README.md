@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Hot-Forms
+
+Hot-Forms is a powerful drag-and-drop form builder that enables users to create dynamic, responsive forms with ease. It features a comprehensive set of components including basic form elements, advanced inputs, layout controls, and premium features like reCAPTCHA integration. Built with React and Ant Design, it offers real-time preview, form validation, and JSON structure visualization. The project supports nested components, complex layouts, and data collection through an intuitive interface.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

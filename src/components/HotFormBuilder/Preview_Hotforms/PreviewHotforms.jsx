@@ -2,23 +2,57 @@ import React from "react";
 import { useStructure } from "../../../utils/useComponentStructure";
 import HotForm from "../../HotForm/HotForm";
 import ReactJson from "react-json-view";
-import { useLocation } from "react-router-dom";
+import { Card, Typography } from 'antd';
+
+const { Title } = Typography;
+
 const PreviewHotforms = () => {
-  const { structure, addComponentToStructure, formData} = useStructure();
-  let { state } = useLocation();
+  const { structure, formData } = useStructure();
 
   return (
     <div>
-      <h1 style={{textAlign:'center'}}>HotForm Demo</h1>
-      <div style={{padding:'20px 100px'}}>
-      <HotForm json={structure} />
-      <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-      {/* <ReactJson src={structure} collapsed enableClipboard theme="monokai" style={{width:'50%', padding: '20px', maxHeight:'50vh', overflowY:'scroll'}}/> */}
-      <ReactJson src={formData} name="formData" collapsed enableClipboard theme="monokai" style={{width:'50%', padding: '20px', maxHeight:'50vh', overflowY:'scroll'}}/>
-      {console.log('state====', state)
-      }
+      <Title level={1} style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        HotForm Preview
+      </Title>
+      
+      <div style={{ padding: '20px 100px' }}>
+        <Card>
+          <HotForm json={structure} />
+        </Card>
 
-      </div>
+        <div style={{ marginTop: '2rem' }}>
+          <Title level={3}>Form Data</Title>
+          <ReactJson 
+            src={formData} 
+            name="formData" 
+            collapsed={1}
+            enableClipboard
+            theme="monokai"
+            style={{
+              padding: '20px',
+              borderRadius: '8px',
+              maxHeight: '50vh',
+              overflowY: 'auto'
+            }}
+          />
+        </div>
+
+        <div style={{ marginTop: '2rem' }}>
+          <Title level={3}>Form Structure</Title>
+          <ReactJson 
+            src={structure} 
+            name="structure" 
+            collapsed={1}
+            enableClipboard
+            theme="monokai"
+            style={{
+              padding: '20px',
+              borderRadius: '8px',
+              maxHeight: '50vh',
+              overflowY: 'auto'
+            }}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,88 +1,84 @@
 import React, { useState } from "react";
-import { Select, Checkbox, Input } from "antd";
-import componentJson from "../../../../Jsons/displayJson.json"
+import { Select, Checkbox, Input, Form } from "antd";
 import "./Validation.css";
 
-const Validation = ({ setValidationObj, componentType }) => {
-  const [isRequired, setIsRequired] = useState(false);
+const Validation = ({ setValidationObj, componentType, values }) => {
+  const [validationValues, setValidationValues] = useState({
+    required: false,
+    minLength: "",
+    maxLength: "",
+    pattern: "",
+    customMessage: "",
+    validateOn: "change"
+  });
 
-  const handleChange = (value) => {
-    console.log(`Selected ${value}`);
-  };
+  const handleInputChange = (fieldName, value) => {
+    setValidationValues(prev => ({
+      ...prev,
+      [fieldName]: value
+    }));
 
-  const handleInputChange = (e, fieldName) => {
-    setValidationObj((prevValues) => ({
+    setValidationObj(prevValues => ({
       ...prevValues,
       validation: {
         ...prevValues.validation,
-        [fieldName]: e.target.value,
+        [fieldName]: value,
       },
     }));
   };
 
-  const handleRequired = () => {
-    setIsRequired((prevIsRequired) => !prevIsRequired);
-    handleInputChange({ target: { value: !isRequired } }, "required");
+  const getComponentSpecificValidation = () => {
+    switch (componentType) {
+      case 'Email':
+        return (
+          <>
+            <Form.Item label="Email Pattern">
+              <Input 
+                value={validationValues.pattern}
+                placeholder="Custom email validation pattern"
+                onChange={(e) => handleInputChange('pattern', e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item label="Custom Error Message">
+              <Input 
+                value={validationValues.customMessage}
+                placeholder="Enter custom error message"
+                onChange={(e) => handleInputChange('customMessage', e.target.value)}
+              />
+            </Form.Item>
+          </>
+        );
+      default:
+        return null;
+    }
   };
-
-  const renderInput = (fieldName, placeholder) =>
-    componentJson?.Basic?.[componentType]?.validation?.[fieldName] && (
-      <div className="default">
-        <span>{placeholder}</span>
-        <Input
-          type={fieldName === "minLength" ? "number" : "text"}
-          placeholder={placeholder}
-          onChange={(e) => handleInputChange(e, fieldName)}
-        />
-      </div>
-    );
-
-  const renderSelect = (fieldName, placeholder, options) =>
-    componentJson?.Basic?.[componentType]?.validation?.[fieldName] && (
-      <div className="data-select">
-        <span>{placeholder}</span>
-        <Select
-          defaultValue=""
-          style={{ width: "100%" }}
-          onChange={handleChange}
-          options={options}
-        />
-      </div>
-    );
-
-  const renderCheckbox = (fieldName, label) =>
-    componentJson?.Basic?.[componentType]?.validation?.[fieldName] && (
-      <Checkbox onChange={handleRequired}>{label}</Checkbox>
-    );
 
   return (
     <div className="main-div">
-      {renderSelect(
-        "validateOn",
-        "Validate On",
-        [
-          { value: "Change", label: "Change" },
-          { value: "Blur", label: "Blur" },
-        ]
-      )}
-      <div className="required">
-        {renderCheckbox("required", "Required")}
-        {/* <Checkbox>Unique</Checkbox> */}
-        {renderCheckbox('onlyAvailableItems',"Allow only available values")}
-      </div>
-      {renderInput("minLength", "Minimum Length")}
-      {renderInput("maxLength", "Maximum Length")}
-      {renderInput("minWordLength", "Minimum Word Length")}
-      {renderInput("maxWordLength", "Maximum Word Length")}
-      {/* <div className="default">
-        <span>Regular expression pattern</span>
-        <Input placeholder="Regular expression pattern" />
-      </div> */}
-      <div className="default">
-        <span>Error Label</span>
-        <Input placeholder="Error Label" />
-      </div>
-      {renderInput('customMessage','Custom Error Message')}
+      <Form layout="vertical">
+        <Form.Item>
+          <Checkbox
+            checked={validationValues.required}
+            onChange={(e) => handleInputChange('required', e.target.checked)}
+          >
+            Required
+          </Checkbox>
+        </Form.Item>
+
+        <Form.Item label="Validate On">
+          <Select
+            value={validationValues.validateOn}
+            onChange={(value) => handleInputChange('validateOn', value)}
+            options={[
+              { value: "change", label: "Change" },
+              { value: "blur", label: "Blur" },
+              { value: "submit", label: "Submit" },
+            ]}
+          />
+        </Form.Item>
+
+        {getComponentSpecificValidation()}
+      </Form>
     </div>
   );
 };
