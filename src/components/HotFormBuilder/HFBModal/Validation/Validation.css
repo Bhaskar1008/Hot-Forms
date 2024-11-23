@@ -1,0 +1,15 @@
+*{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+}
+.main-div{
+          height: 350px;
+          overflow-y: scroll;
+}
+
+.required{
+          display: flex;
+          flex-direction: column;
+          margin-top: 10px;
+}

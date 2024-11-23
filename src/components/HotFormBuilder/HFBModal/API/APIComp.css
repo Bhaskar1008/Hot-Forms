@@ -1,0 +1,39 @@
+*{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+}
+.main-div{
+          height: 350px;
+          overflow-y: scroll;
+}
+.property{
+          margin-bottom: 2px;
+}
+.body{
+          /* margin: 10px; */
+}
+
+.field{
+          /* margin-top: 5px; */
+}
+.cancel{
+          cursor: pointer;
+}
+.input{
+          margin: 20px;
+}
+.table{
+          width: 100%;
+          border: 1px solid black;
+         
+}
+.table thead{
+          border: 1px solid black;
+}
+.add{
+          margin-top: 5px;
+}
+.fields-select{
+          margin-bottom: 5px;
+}

@@ -1,0 +1,18 @@
+*{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+}
+.default{
+          margin-top: 10px;
+}
+.data-select{
+          margin-top: 10px;
+          z-index: 1000;
+}
+.ant-select-dropdown {
+          z-index: 1000; /* Adjust this value as needed */
+        }
+.radio{
+          margin-top: 10px;
+}
