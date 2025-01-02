@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# HotForm Builder for React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A powerful and flexible form builder component for React applications that allows you to create dynamic forms using a simple configuration object.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+```bash
+npm install @hotformbuilder/react
+```
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```tsx
+import { HotForm } from '@hotformbuilder/react';
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+const formConfig = {
+  components: [
+    {
+      id: 'name',
+      type: 'text',
+      label: 'Full Name',
+      required: true
+    },
+    {
+      id: 'email',
+      type: 'text',
+      label: 'Email Address',
+      required: true,
+      validation: {
+        pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+      }
+    }
+  ]
+};
 
-### `npm test`
+function App() {
+  const handleSubmit = (data) => {
+    console.log('Form data:', data);
+  };
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <HotForm
+      src={{ components: formConfig }}
+      onSubmit={handleSubmit}
+    />
+  );
+}
+```
 
-### `npm run build`
+## Supported Components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Basic Components
+- TextField (`text`)
+- Checkbox (`checkbox`)
+- Radio (`radio`)
+- Select (`select`)
+- Button (`button`)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Advanced Components
+- DateTime (`datetime`)
+- FileUpload (`fileupload`)
+- Signature (`signature`)
+- OTP (`otp`)
+- Tags (`tags`)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Premium Components
+- Wizard (`wizard`)
+- Language (`language`)
 
-### `npm run eject`
+### Layout Components
+- Container (`container`)
+- Table (`table`)
+- Tabs (`tabs`)
+- Collapse (`collapse`)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Chart Components
+- PieChart (`pie-chart`)
+- DoughnutChart (`doughnut-chart`)
+- BarChart (`bar-chart`)
+- LineChart (`line-chart`)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### API Components
+- RestAPITrigger (`rest-api`)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Props
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Prop | Type | Description |
+|------|------|-------------|
+| src | `{ components: FormComponent[] }` | Configuration object for the form |
+| onSubmit | `(data: Record<string, any>) => void` | Callback function called when the form is submitted |
+| onChange | `(data: Record<string, any>) => void` | Callback function called when any form value changes |
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT
